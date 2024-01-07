@@ -10,5 +10,6 @@
       "database": "hotel_reservation_go",
       "username": "postgres"
     }
-  ]
+  ],
+  "cSpell.words": ["dlgs", "gorm", "mortazavian", "sslmode", "travelerlogic"]
 }

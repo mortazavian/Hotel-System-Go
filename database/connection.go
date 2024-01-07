@@ -11,8 +11,10 @@ import (
 	"gorm.io/gorm"
 )
 
-var instance *gorm.DB
+var Instance *gorm.DB
 var once sync.Once
+
+// var db *gorm.DB
 
 func NewGormPostgres() *gorm.DB {
 	once.Do(func() {
@@ -37,8 +39,8 @@ func NewGormPostgres() *gorm.DB {
 
 		fmt.Println("Successfully connected to the database!")
 
-		instance = db
+		Instance = db
 	})
 
-	return instance
+	return Instance
 }

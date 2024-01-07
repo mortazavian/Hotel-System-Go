@@ -14,6 +14,6 @@ type Traveler struct {
 	Password    string
 	DateofBirth time.Time
 	NationalID  string
-	phoneNumber string
-	email       string
+	PhoneNumber string
+	Email       string
 }
