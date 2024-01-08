@@ -9,6 +9,7 @@ import (
 	ui "github.com/mortazavian/Hotel-Reservation-Go/UI"
 	"github.com/mortazavian/Hotel-Reservation-Go/database"
 	"github.com/mortazavian/Hotel-Reservation-Go/models"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func SignUp() {
@@ -36,7 +37,9 @@ func UserInformation(traveler *models.Traveler) {
 		log.Fatal(err)
 	}
 
-	password, _, err := dlgs.Password(ui.HotelName, "Enter you password:")
+	pass, _, err := dlgs.Password(ui.HotelName, "Enter you password:")
+	password, err := bcrypt.GenerateFromPassword([]byte(pass), 14)
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -64,7 +67,7 @@ func UserInformation(traveler *models.Traveler) {
 	traveler.FirstName = firstName
 	traveler.LastName = lastName
 	traveler.Username = username
-	traveler.Password = password
+	traveler.Password = string(password[:])
 	traveler.DateofBirth = dataOfBirth
 	traveler.NationalID = nationalID
 	traveler.PhoneNumber = phoneNumber
@@ -78,18 +81,35 @@ func UserLogin() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	password, _, err := dlgs.Password(ui.HotelName, "enter your password: ")
+	pass, _, err := dlgs.Password(ui.HotelName, "enter your password: ")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	password, err := bcrypt.GenerateFromPassword([]byte(pass), 14)
 	if err != nil {
 		log.Fatal(err)
 	}
-	user, err := database.GetUser(username, password)
+
+	user, err := database.GetUser(username)
 	if err != nil {
 		fmt.Println("--------------------")
+		dlgs.MessageBox(ui.HotelName, "Username is wrong!")
 		fmt.Println(err)
 		fmt.Println("--------------------")
 	}
 	if err == nil {
-		fmt.Println(user)
-		// decider.TravelerDecider()
+		if !CheckPasswordHash(string(password), user.Password) {
+			loggedUser = user
+			fmt.Println(loggedUser)
+		} else {
+			fmt.Println("Wrong password!!!")
+		}
+
 	}
+}
+
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }

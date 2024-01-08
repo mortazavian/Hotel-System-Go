@@ -11,9 +11,9 @@ func InsertTraveler(traveler *models.Traveler) {
 
 }
 
-func GetUser(username, password string) (models.Traveler, error) {
+func GetUser(username string) (models.Traveler, error) {
 	user := models.Traveler{}
-	result := Instance.Where("username = ?", username).Where("password = ?", password).First(&user)
+	result := Instance.Where("username = ?", username).First(&user)
 	if result.Error != nil {
 		return models.Traveler{}, result.Error
 	}
