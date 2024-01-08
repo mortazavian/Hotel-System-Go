@@ -15,6 +15,8 @@ func DecideRole() {
 	switch userInput {
 	case "Traveler":
 		TravelerDecider()
+	case "Tour Leader":
+		TourLeaderDecider()
 	case "EXIT":
 		return
 	}
