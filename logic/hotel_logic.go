@@ -38,6 +38,10 @@ func UserInformation(traveler *models.Traveler) {
 	}
 
 	pass, _, err := dlgs.Password(ui.HotelName, "Enter you password:")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	password, err := bcrypt.GenerateFromPassword([]byte(pass), 14)
 
 	if err != nil {
