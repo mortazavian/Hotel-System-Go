@@ -6,17 +6,15 @@ import (
 )
 
 func DecideRole() {
-	userInput, _, err := dlgs.List(ui.HotelName, "Select your role", []string{"Traveler", "Manager",
-		"Head of Facilities", "Head of Reservation", "Head of Restaurant", "Head of Pool", "Tour Leader",
-		"Head of Cleaning", "Cleaner", "EXIT"})
+	userInput, _, err := dlgs.List(ui.HotelName, "Select your role", []string{"Traveler", "Employee", "EXIT"})
 	if err != nil {
 		panic(err)
 	}
 	switch userInput {
 	case "Traveler":
 		TravelerDecider()
-	case "Tour Leader":
-		TourLeaderDecider()
+	case "Employee":
+		EmployeeDecider()
 	case "EXIT":
 		return
 	}

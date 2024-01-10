@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-type TourLeader struct {
+type Employee struct {
 	gorm.Model
 	PersonalNumber int
 	FirstName      string

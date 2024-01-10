@@ -18,4 +18,5 @@ type Tour struct {
 	EndLocation    string
 	StartTime      time.Time
 	EndTime        time.Time
+	AcceptionState bool
 }

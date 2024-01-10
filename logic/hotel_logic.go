@@ -3,16 +3,18 @@ package logic
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/gen2brain/dlgs"
 	ui "github.com/mortazavian/Hotel-Reservation-Go/UI"
 	"github.com/mortazavian/Hotel-Reservation-Go/database"
+
 	"github.com/mortazavian/Hotel-Reservation-Go/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func SignUp() {
+func TravelerSignUp() {
 	MakeNewUser()
 }
 
@@ -111,6 +113,107 @@ func UserLogin() {
 		}
 
 	}
+}
+
+func EmployeeLogin() {
+	username, _, err := dlgs.Entry(ui.HotelName, "enter your username: ", "")
+	if err != nil {
+		log.Fatal(err)
+	}
+	pass, _, err := dlgs.Password(ui.HotelName, "enter your password: ")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	password, err := bcrypt.GenerateFromPassword([]byte(pass), 14)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	user, err := database.GetUser(username)
+	if err != nil {
+		fmt.Println("--------------------")
+		dlgs.MessageBox(ui.HotelName, "Username is wrong!")
+		fmt.Println(err)
+		fmt.Println("--------------------")
+	}
+	if err == nil {
+		if !CheckPasswordHash(string(password), user.Password) {
+			loggedUser = user
+			fmt.Println(loggedUser)
+		} else {
+			fmt.Println("Wrong password!!!")
+		}
+
+	}
+}
+
+func EmployeeSignUp() {
+	MakeNewEmployee()
+}
+
+func MakeNewEmployee() {
+	employee := models.Employee{}
+	EmployeeInformation(&employee)
+}
+
+func EmployeeInformation(employee *models.Employee) {
+	employeeNumber, _, err := dlgs.Entry(ui.HotelName, "Enter your employee number: ", "")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	employeeNumberInteger, err := strconv.Atoi(employeeNumber)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	firstName, _, err := dlgs.Entry(ui.HotelName, "Enter your first name:", "")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	lastName, _, err := dlgs.Entry(ui.HotelName, "Enter your last name:", "")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	username, _, err := dlgs.Entry(ui.HotelName, "Enter your username:", "")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	pass, _, err := dlgs.Password(ui.HotelName, "Enter your password:")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	password, err := bcrypt.GenerateFromPassword([]byte(pass), 14)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	role, _, err := dlgs.List(ui.HotelName, "Please select your role: ", []string{"Manager",
+		"Head of Facilities", "Head of Reservation", "Head of Restaurant", "Head of Pool", "Tour Leader",
+		"Head of Cleaning", "Cleaner", "EXIT"})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	employee.PersonalNumber = employeeNumberInteger
+	employee.FirstName = firstName
+	employee.LastName = lastName
+	employee.Username = username
+	employee.Password = pass
+	employee.Password = string(password[:])
+	employee.Role = role
+
+	fmt.Println(employee)
+
+	database.InsertEmployee(employee)
+
+	// decider.EmployeeDecider()
+
 }
 
 func CheckPasswordHash(password, hash string) bool {

@@ -1,2 +1,5 @@
 package logic
 
+func AddTour() {
+	
+}

@@ -10,7 +10,7 @@ func TravelerDecider() {
 	userInput, _, err := dlgs.List(ui.HotelName, "Select one item below:", []string{"Sign Up", "Login", "Back"})
 
 	if userInput == "Sign Up" {
-		logic.SignUp()
+		logic.TravelerSignUp()
 		TravelerDecider()
 	} else if userInput == "Login" {
 		logic.UserLogin()

@@ -16,4 +16,9 @@ func MakeMigrations(db *gorm.DB) {
 		return
 	}
 
+	err = db.AutoMigrate(&models.Employee{})
+	if err != nil {
+		return
+	}
+
 }
