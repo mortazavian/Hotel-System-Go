@@ -39,3 +39,23 @@ func FoodInformation(food *models.Food) {
 
 	EmployeeDecider()
 }
+
+func DeleteFood() {
+	foodNameToDelete := SeeAllFood()
+	DeleteSelectedFood(foodNameToDelete)
+	EmployeeDecider()
+}
+
+func SeeAllFood() string {
+	allFoods := database.GetFoods()
+
+	foodName, _, err := dlgs.List(ui.HotelName, "Please select which Food you want to delete:", allFoods)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return foodName
+}
+
+func DeleteSelectedFood(foodName string) {
+	database.DeleteFood(foodName)
+}

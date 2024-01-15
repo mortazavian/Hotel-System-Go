@@ -111,3 +111,23 @@ func TourInformation(tour *models.Tour) {
 
 	database.InsertTour(tour)
 }
+
+func DeleteTour() {
+	tourNameToDelete := SeeAllTour()
+	DeleteSelectedTour(tourNameToDelete)
+	EmployeeDecider()
+}
+
+func SeeAllTour() string {
+	allTours := database.GetTours()
+
+	tourName, _, err := dlgs.List(ui.HotelName, "Please select which tour you want to delete:", allTours)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return tourName
+}
+
+func DeleteSelectedTour(tourName string) {
+	database.DeleteTour(tourName)
+}
