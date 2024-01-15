@@ -80,6 +80,7 @@ func UserInformation(traveler *models.Traveler) {
 	traveler.Email = email
 
 	database.InsertTraveler(traveler)
+	TravelerDecider()
 }
 
 func UserLogin() {
@@ -113,6 +114,7 @@ func UserLogin() {
 		}
 
 	}
+	TravelerDecider()
 }
 
 func EmployeeLogin() {
@@ -130,7 +132,7 @@ func EmployeeLogin() {
 		log.Fatal(err)
 	}
 
-	user, err := database.GetUser(username)
+	employee, err := database.GetEmployee(username)
 	if err != nil {
 		fmt.Println("--------------------")
 		dlgs.MessageBox(ui.HotelName, "Username is wrong!")
@@ -138,14 +140,15 @@ func EmployeeLogin() {
 		fmt.Println("--------------------")
 	}
 	if err == nil {
-		if !CheckPasswordHash(string(password), user.Password) {
-			loggedUser = user
-			fmt.Println(loggedUser)
+		if !CheckPasswordHash(string(password), employee.Password) {
+			loggedEmployee = employee
+			fmt.Println(loggedEmployee)
 		} else {
 			fmt.Println("Wrong password!!!")
 		}
 
 	}
+	EmployeeDecider()
 }
 
 func EmployeeSignUp() {
@@ -212,7 +215,7 @@ func EmployeeInformation(employee *models.Employee) {
 
 	database.InsertEmployee(employee)
 
-	// decider.EmployeeDecider()
+	EmployeeDecider()
 
 }
 

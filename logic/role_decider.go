@@ -1,4 +1,4 @@
-package decider
+package logic
 
 import (
 	"github.com/gen2brain/dlgs"

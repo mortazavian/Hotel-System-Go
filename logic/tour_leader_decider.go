@@ -1,11 +1,10 @@
-package decider
+package logic
 
 import (
 	"fmt"
 
 	"github.com/gen2brain/dlgs"
 	ui "github.com/mortazavian/Hotel-Reservation-Go/UI"
-	"github.com/mortazavian/Hotel-Reservation-Go/logic"
 )
 
 func TourLeaderMenu() {
@@ -14,8 +13,10 @@ func TourLeaderMenu() {
 		fmt.Println(err)
 	}
 
+	fmt.Println(userInput)
+
 	switch userInput {
 	case "Add Tour":
-		logic.AddTour()
+		MakeNewTour()
 	}
 }

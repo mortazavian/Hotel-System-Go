@@ -2,7 +2,7 @@ package database
 
 import "github.com/mortazavian/Hotel-Reservation-Go/models"
 
-func InsertTour(tour *models.Tour) {
-	result := Instance.Create(&tour)
+func InsertFood(food *models.Food) {
+	result := Instance.Create(&food)
 	_ = result
 }

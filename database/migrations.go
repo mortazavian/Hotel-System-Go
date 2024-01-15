@@ -21,4 +21,9 @@ func MakeMigrations(db *gorm.DB) {
 		return
 	}
 
+	err = db.AutoMigrate(&models.Food{})
+	if err != nil {
+		return
+	}
+
 }
