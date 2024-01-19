@@ -12,9 +12,9 @@ import (
 )
 
 func MakeNewTour() {
-	fmt.Println("KKKKKKKKKKKK")
 	tour := models.Tour{}
 	TourInformation(&tour)
+	EmployeeDecider()
 }
 
 func TourInformation(tour *models.Tour) {
@@ -130,4 +130,17 @@ func SeeAllTour() string {
 
 func DeleteSelectedTour(tourName string) {
 	database.DeleteTour(tourName)
+}
+
+func AcceptTour() {
+	allNewTours := database.SeeAllNewTour()
+	tourName, _, err := dlgs.List(ui.HotelName, "Please select which tour you want to accept:", allNewTours)
+	if err != nil {
+		fmt.Println(err)
+	}
+	acceptSelectedTour(tourName)
+}
+
+func acceptSelectedTour(tourName string) {
+	database.ApproveTour(tourName)
 }

@@ -26,4 +26,19 @@ func MakeMigrations(db *gorm.DB) {
 		return
 	}
 
+	err = db.AutoMigrate(&models.Room{})
+	if err != nil {
+		return
+	}
+
+	err = db.AutoMigrate(&models.Reservation{})
+	if err != nil {
+		return
+	}
+
+	err = db.AutoMigrate(&models.CleaningRequest{})
+	if err != nil {
+		return
+	}
+
 }

@@ -17,10 +17,14 @@ func EmployeeDecider() {
 	} else if loggedEmployee.Role == "Head of Restaurant" {
 		menuItems = append(menuItems, "Add Food")
 		menuItems = append(menuItems, "Delete Food")
+	} else if loggedEmployee.Role == "Manager" {
+		menuItems = append(menuItems, "Accept Tour")
+		menuItems = append(menuItems, "Add Room")
+		menuItems = append(menuItems, "Add Reservation")
 	} else {
-		menuItems = append(menuItems, "Sign Up", "Login", "Manager",
-			"Head of Facilities", "Head of Reservation", "Head of Restaurant", "Head of Pool", "Tour Leader",
-			"Head of Cleaning", "Cleaner", "EXIT")
+		menuItems = append(menuItems, "Sign Up", "Login") //  "Manager",
+		// "Head of Facilities", "Head of Reservation", "Head of Restaurant", "Head of Pool", "Tour Leader",
+		// "Head of Cleaning", "Cleaner", "EXIT"))
 	}
 
 	userInput, _, err := dlgs.List(ui.HotelName, "Please select what you want.", menuItems)
@@ -46,14 +50,14 @@ func EmployeeDecider() {
 	case "Delete Food":
 		DeleteFood()
 		return
-	case "Head of Pool":
-		// TODO
+	case "Accept Tour":
+		AcceptTour()
 		return
-	case "Tour Leader":
-		TourLeaderMenu()
+	case "Add Room":
+		AddRoom()
 		return
-	case "Head of Cleaning":
-		// TODO
+	case "Add Reservation":
+		AddReservations()
 		return
 	case "Cleaner":
 		// TODO

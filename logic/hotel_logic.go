@@ -223,3 +223,110 @@ func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
+
+func AddRoom() {
+	capacityList := []string{"1", "2", "4"}
+	capacity, _, err := dlgs.List(ui.HotelName, "Enter the capacity of the room:", capacityList)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	capacityInt, err := strconv.Atoi(capacity)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	roomNumber, _, err := dlgs.Entry(ui.HotelName, "Enter the room number: ", "0")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	roomNumberInt, err := strconv.Atoi(roomNumber)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	roomType, _, err := dlgs.List(ui.HotelName, "Select the type of room: ", []string{"VIP", "ECO", "Penthouse"})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	room := models.Room{}
+	room.Capacity = capacityInt
+	room.RoomNumber = roomNumberInt
+	room.Type = roomType
+
+	database.InsertRoom(&room)
+
+	EmployeeDecider()
+}
+
+func MakeNewReservation() {
+	reserve := &models.Reservation{}
+	FilterReservation(reserve)
+}
+
+func FilterReservation(reserve *models.Reservation) {
+	roomType, _, err := dlgs.List(ui.HotelName, "Select the type of room: ", []string{"VIP", "ECO", "Penthouse"})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	reserveDate, _, err := dlgs.Date(ui.HotelName, "Enter the date you want room for", time.Now())
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	roomCapacity, _, err := dlgs.List(ui.HotelName, "Please select the capacity: ", []string{"1", "2", "3"})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	roomCapacityInt, err := strconv.Atoi(roomCapacity)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	reservations := database.FilterReservationsRaw(roomCapacityInt, roomType, reserveDate)
+
+	reservationsDates := []string{}
+	for _, reserve := range reservations {
+		if !reserve.GotBool {
+			reservationsDates = append(reservationsDates, reserve.Date.Local().String())
+		}
+	}
+
+	selectedReservation, _, err := dlgs.List(ui.HotelName, "Please select what time you want to reserve:", reservationsDates)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// selectTimeReservation, err := time.Parse(selectedResevation)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	SelectReserve(selectedReservation)
+}
+
+func SelectReserve(reserveTime string) {
+	database.GetReservationForUser(reserveTime, loggedUser)
+}
+
+func AddReservations() {
+	date, _, err := dlgs.Date(ui.HotelName, "Enter the date: ", time.Now())
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	roomNumber, _, err := dlgs.Entry(ui.HotelName, "Enter the room id: ", "1")
+	roomNumberInt, err := strconv.Atoi(roomNumber)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	reservation := models.Reservation{}
+	reservation.Date = date
+	reservation.RoomID = uint(roomNumberInt)
+	database.InsertReservation(reservation)
+}
