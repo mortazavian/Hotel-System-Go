@@ -32,3 +32,11 @@ func GetReservationForUser(reserveTime string, traveler models.Traveler) {
 
 	Instance.Model(&models.Reservation{}).Where("date = ?", reserveTime).Update("user_id", traveler.ID).Update("got_bool", true)
 }
+
+func DeleteReservation(reserveTime string) {
+	reserveTime = strings.TrimRight(reserveTime, "+330")
+
+	// reserve := models.Reservation{}
+
+	Instance.Delete(&models.Reservation{}, "date = ?", reserveTime)
+}

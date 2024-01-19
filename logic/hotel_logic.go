@@ -330,3 +330,20 @@ func AddReservations() {
 	reservation.RoomID = uint(roomNumberInt)
 	database.InsertReservation(reservation)
 }
+
+func CancelReservation() {
+	reservations := database.GetAllUserReservations(loggedUser)
+
+	options := []string{}
+	for _, reservation := range reservations {
+		options = append(options, reservation.Date.String())
+	}
+
+	userInput, _, err := dlgs.List(ui.HotelName, "Select which reservation you want to cancel: ", options)
+	if err != nil {
+		fmt.Println(reservations)
+	}
+
+	database.DeleteReservation(userInput)
+
+}
