@@ -41,4 +41,9 @@ func MakeMigrations(db *gorm.DB) {
 		return
 	}
 
+	err = db.AutoMigrate(&models.PoolSans{})
+	if err != nil {
+		return
+	}
+
 }

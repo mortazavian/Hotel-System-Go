@@ -27,6 +27,9 @@ func EmployeeDecider() {
 		menuItems = append(menuItems, "Add Room")
 		menuItems = append(menuItems, "Add Reservation")
 
+	} else if loggedEmployee.Role == "Head of Pool" {
+		menuItems = append(menuItems, "Add Pool Sans")
+
 	} else {
 		menuItems = append(menuItems, "Sign Up", "Login") //  "Manager",
 		// "Head of Facilities", "Head of Reservation", "Head of Restaurant", "Head of Pool", "Tour Leader",
@@ -68,8 +71,8 @@ func EmployeeDecider() {
 	case "Assign Cleaning":
 		AssignCleaning()
 		return
-	case "EXIT":
-		//TODO
+	case "Add Pool Sans":
+		AddPoolSans()
 
 	}
 

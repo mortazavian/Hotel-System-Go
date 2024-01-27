@@ -17,3 +17,7 @@ func main() {
 
 	logic.DecideRole()
 }
+
+
+// Added features:
+// 1. Head of pool can add a Sans.
