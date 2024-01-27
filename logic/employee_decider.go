@@ -14,13 +14,19 @@ func EmployeeDecider() {
 	if loggedEmployee.Role == "Tour Leader" {
 		menuItems = append(menuItems, "Add Tour")
 		menuItems = append(menuItems, "Delete Tour")
+
+	} else if loggedEmployee.Role == "Head of Cleaning" {
+		menuItems = append(menuItems, "Assign Cleaning")
+
 	} else if loggedEmployee.Role == "Head of Restaurant" {
 		menuItems = append(menuItems, "Add Food")
 		menuItems = append(menuItems, "Delete Food")
+
 	} else if loggedEmployee.Role == "Manager" {
 		menuItems = append(menuItems, "Accept Tour")
 		menuItems = append(menuItems, "Add Room")
 		menuItems = append(menuItems, "Add Reservation")
+
 	} else {
 		menuItems = append(menuItems, "Sign Up", "Login") //  "Manager",
 		// "Head of Facilities", "Head of Reservation", "Head of Restaurant", "Head of Pool", "Tour Leader",
@@ -59,8 +65,8 @@ func EmployeeDecider() {
 	case "Add Reservation":
 		AddReservations()
 		return
-	case "Cleaner":
-		// TODO
+	case "Assign Cleaning":
+		AssignCleaning()
 		return
 	case "EXIT":
 		//TODO

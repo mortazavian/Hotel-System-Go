@@ -301,11 +301,6 @@ func FilterReservation(reserve *models.Reservation) {
 		fmt.Println(err)
 	}
 
-	// selectTimeReservation, err := time.Parse(selectedResevation)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
 	SelectReserve(selectedReservation)
 }
 
@@ -344,6 +339,37 @@ func CancelReservation() {
 		fmt.Println(reservations)
 	}
 
-	database.DeleteReservation(userInput)
+	selectReservationToCancel(userInput)
+}
+
+func selectReservationToCancel(reserveTime string) {
+	database.DeleteReservation(reserveTime)
+}
+
+func ExtendReservation() {
+	reservations := database.GetAllUserReservations(loggedUser)
+
+	options := []string{}
+	for _, reservation := range reservations {
+		optionID := strconv.Itoa(int(reservation.ID))
+		options = append(options, optionID)
+	}
+
+	userInput, _, err := dlgs.List(ui.HotelName, "Select which reservation you want to extend: ", options)
+	if err != nil {
+		fmt.Println(reservations)
+	}
+
+	newDate, _, err := dlgs.Date(ui.HotelName, "Enter new date: ", time.Now())
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	reserveID, err := strconv.Atoi(userInput)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	database.UpdateReservationEndDate(reserveID, newDate)
 
 }

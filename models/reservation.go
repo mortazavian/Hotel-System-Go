@@ -14,4 +14,5 @@ type Reservation struct {
 	GotBool  bool
 	UserID   uint
 	Traveler Traveler `gorm:"foreignKey:UserID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	EndDate  time.Time
 }

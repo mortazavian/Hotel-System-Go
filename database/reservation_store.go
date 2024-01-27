@@ -40,3 +40,22 @@ func DeleteReservation(reserveTime string) {
 
 	Instance.Delete(&models.Reservation{}, "date = ?", reserveTime)
 }
+
+func UpdateReservationEndDate(reserveID int, newDate time.Time) {
+
+	newDateString := newDate.String()
+
+	fmt.Println(newDateString)
+
+	newDateString = strings.TrimRight(newDateString, "UTC")
+
+	fmt.Println(newDateString)
+
+	newDateString = strings.TrimRight(newDateString, "0000+")
+
+	fmt.Println(newDateString)
+
+	// fmt.Println(newDate.Format("2024-01-19 19:53:56.204"))
+
+	Instance.Model(&models.Reservation{}).Where("id = ?", reserveID).Update("end_date", newDateString)
+}
