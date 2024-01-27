@@ -13,7 +13,8 @@ func TravelerDecider() {
 	if loggedUser.FirstName == "" {
 		options = append(options, "Sign Up", "Login", "Back")
 	} else {
-		options = append(options, "Reserve", "Request Cleaning", "Cancel Reservation", "Extend Reservation")
+		options = append(options, "Reserve", "Request Cleaning", "Cancel Reservation", "Extend Reservation",
+			"See Pool Sans")
 	}
 
 	userInput, _, err := dlgs.List(ui.HotelName, "Select one item below:", options)
@@ -37,6 +38,8 @@ func TravelerDecider() {
 		CancelReservation()
 	} else if userInput == "Extend Reservation" {
 		ExtendReservation()
+	} else if userInput == "See Pool Sans" {
+		SeePoolSans()
 	}
 
 	options = nil

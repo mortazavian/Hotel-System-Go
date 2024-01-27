@@ -49,3 +49,21 @@ func PoolSansInformation(sans *models.PoolSans) {
 	EmployeeDecider()
 
 }
+
+func SeePoolSans() {
+	sanses := database.GetAllSans()
+	sansesString := []string{}
+	for _, sans := range sanses {
+		// startTimeString := string.
+		sansesString = append(sansesString, sans.StartTime.String()[0:11]+" - "+sans.EndTime.String()[0:11])
+
+	}
+
+	_, _, err := dlgs.List(ui.HotelName, "All sans. 8:00 A.M. to 11:00 P.M.", sansesString)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	TravelerDecider()
+
+}

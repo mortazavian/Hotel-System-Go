@@ -20,4 +20,5 @@ func main() {
 
 
 // Added features:
-// 1. Head of pool can add a Sans.
+// 1. Head of pool can add a sans.
+// 2. Traveler can see pool sanses.
