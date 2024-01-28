@@ -5,11 +5,23 @@ import (
 
 	"github.com/mortazavian/Hotel-Reservation-Go/database"
 	"github.com/mortazavian/Hotel-Reservation-Go/logic"
+	"gorm.io/gorm"
 )
 
 func main() {
-	db := database.NewGormPostgres()
-	_ = db
+
+	var db *gorm.DB
+	// go func() {
+	db = database.NewGormPostgres()
+	// }()
+	// for {
+	// 	dlgs.MessageBox(ui.HotelName, "Trying to connect to Database!!!")
+
+	// 	fmt.Println("sdfsfs")
+	// 	if db != nil {
+	// 		break
+	// 	}
+	// }
 
 	fmt.Println(database.Instance)
 
@@ -17,7 +29,6 @@ func main() {
 
 	logic.DecideRole()
 }
-
 
 // Added features:
 // 1. Head of pool can add a sans.
