@@ -11,5 +11,13 @@
       "username": "postgres"
     }
   ],
-  "cSpell.words": ["dlgs", "gorm", "mortazavian", "sslmode", "travelerlogic"]
+  "cSpell.words": [
+    "dlgs",
+    "geopoint",
+    "gorm",
+    "marcinwyszynski",
+    "mortazavian",
+    "sslmode",
+    "travelerlogic"
+  ]
 }

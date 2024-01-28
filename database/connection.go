@@ -23,10 +23,10 @@ func NewGormPostgres() *gorm.DB {
 		// Connection configuration
 		dsn := &url.URL{
 			Scheme:   "postgres",
-			User:     url.UserPassword("postgres", "admin"),
-			Host:     "localhost",
+			User:     url.UserPassword("root", "PGIVo79HWrGRcbwxVi9D4uXk"),
+			Host:     "kilimanjaro.liara.cloud:30996",
 			Path:     "hotel_reservation_go",
-			RawQuery: "sslmode=disable&timezone=" + tehranTimezone.String(),
+			RawQuery: "timezone=" + tehranTimezone.String(),
 		}
 
 		// Convert URL to connection string
